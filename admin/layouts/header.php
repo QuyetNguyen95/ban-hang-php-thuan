@@ -11,6 +11,7 @@
         <link href="<?php echo base_url() ?>public/admin/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="<?php echo base_url() ?>public/admin/css/sb-admin.css" rel="stylesheet">
+         <link href="<?php echo base_url() ?>public/ckeditor/ckeditor.js" rel="stylesheet">
         <!-- Custom Fonts -->
         <!--<link href="/tuanphuongphp/public/admin/css/font-awesome.min.css" rel="stylesheet" type="text/css">-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

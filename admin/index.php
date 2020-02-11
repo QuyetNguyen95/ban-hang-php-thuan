@@ -20,6 +20,10 @@
     //product
 
     $countPro = $db->countTable("products");
+
+    //get infomation of transaction
+
+    $transaction = $db->fetchAll("transaction");
  ?>
 
 <?php require_once __DIR__."/layouts/header.php" //__DIR__Đường dẫn thư mục hiện tại.?>
@@ -141,61 +145,22 @@
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>Order #</th>
-                            <th>Order Date</th>
-                            <th>Order Time</th>
-                            <th>Amount (USD)</th>
+                            <th>Transaction #</th>
+                            <th>Transaction Date</th>
+                            <th>Transaction Time</th>
+                            <th>Amount (VNĐ)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>3326</td>
-                            <td>10/21/2013</td>
-                            <td>3:29 PM</td>
-                            <td>$321.33</td>
-                        </tr>
-                        <tr>
-                            <td>3325</td>
-                            <td>10/21/2013</td>
-                            <td>3:20 PM</td>
-                            <td>$234.34</td>
-                        </tr>
-                        <tr>
-                            <td>3324</td>
-                            <td>10/21/2013</td>
-                            <td>3:03 PM</td>
-                            <td>$724.17</td>
-                        </tr>
-                        <tr>
-                            <td>3323</td>
-                            <td>10/21/2013</td>
-                            <td>3:00 PM</td>
-                            <td>$23.71</td>
-                        </tr>
-                        <tr>
-                            <td>3322</td>
-                            <td>10/21/2013</td>
-                            <td>2:49 PM</td>
-                            <td>$8345.23</td>
-                        </tr>
-                        <tr>
-                            <td>3321</td>
-                            <td>10/21/2013</td>
-                            <td>2:23 PM</td>
-                            <td>$245.12</td>
-                        </tr>
-                        <tr>
-                            <td>3320</td>
-                            <td>10/21/2013</td>
-                            <td>2:15 PM</td>
-                            <td>$5663.54</td>
-                        </tr>
-                        <tr>
-                            <td>3319</td>
-                            <td>10/21/2013</td>
-                            <td>2:13 PM</td>
-                            <td>$943.45</td>
-                        </tr>
+                        <?php $stt = 1; foreach ($transaction as  $value): ?>
+                            <tr>
+                                <td><?php echo $stt ?></td>
+                                <td><?php echo date('d-m-Y', strtotime($value['updated_at'])); ?></td>
+                                <td><?php echo date('h:i A', strtotime($value['updated_at'])); ?></td>
+                                <td><?php echo $value['amount'] ?> VNĐ</td>
+                            </tr>
+                        <?php $stt++; endforeach ?>
+                       
                     </tbody>
                 </table>
             </div>
