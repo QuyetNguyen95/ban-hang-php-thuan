@@ -59,30 +59,13 @@
                     </div>
                 </div>
                 <div class="container">
-                    <div class="row" id="header-main">
-                        <div class="col-md-5">
-                            <form class="form-inline">
-                                <div class="form-group">
-                                    <label>
-                                        <select name="category" class="form-control">
-                                            <option> All Category</option>
-                                            <option> Dell </option>
-                                            <option> Hp </option>
-                                            <option> Asuc </option>
-                                            <option> Apper </option>
-                                        </select>
-                                    </label>
-                                    <input type="text" name="keywork" placeholder=" input keywork" class="form-control">
-                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-4">
+                    <div class="row " id="header-main">
+                        <div class="col-md-4 ">
                             <a href="">
                                 <img src="<?php echo base_url() ?>public/frontend/images/logo-default.png">
                             </a>
                         </div>
-                        <div class="col-md-3" id="header-right">
+                        <div class="col-md-3 col-md-offset-5" id="header-right">
                             <div class="pull-right">
                                 <div class="pull-left">
                                     <i class="glyphicon glyphicon-phone-alt"></i>
@@ -110,19 +93,16 @@
                         <!--menu main-->
                         <ul id="menu-main">
                             <li>
-                                <a href="">Shop</a>
+                                <a href="">Sản phẩm</a>
                             </li>
                             <li>
-                                <a href="">Mobile</a>
+                                <a href="">Tin tức</a>
                             </li>
                             <li>
-                                <a href="">Contac</a>
+                                <a href="">Giới thiệu</a>
                             </li>
                             <li>
-                                <a href="">Blog</a>
-                            </li>
-                            <li>
-                                <a href="">About us</a>
+                                <a href="">Liên hệ</a>
                             </li>
                         </ul>
                         <!-- end menu main-->

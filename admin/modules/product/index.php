@@ -1,6 +1,7 @@
 <?php
     $open = "product";
 	require_once __DIR__."/../../autoload/autoload.php";
+    $category = $db->fetchAll("category");
 
 	if (isset($_GET['page'])) {
          $p = $_GET['page'];
@@ -10,14 +11,43 @@
         $p =1;
     }
 
+        $reques_name = getInput('name');
+        $reques_cate = getInput('cate');
+        //tim san pham theo name
+        if (isset($reques_name) && $reques_name != NULL) {
+            $sql = "SELECT products.*,category.name as namecate FROM products LEFT JOIN category ON category.id = products.category_id WHERE products.name LIKE '%$reques_name%'";
+             $product = $db->fetchsql($sql);
 
-        $sql = "SELECT products.*,category.name as namecate FROM products LEFT JOIN category ON category.id = products.category_id";
+       
+        }
+         
 
-        $product = $db->fetchJone('products',$sql,$p,2,true);
-        if (isset($product['page'])) {
+         //tim san pham theo category
+         if (isset($reques_cate) && $reques_cate != NULL) {
+            $sql = "SELECT products.*,category.name as namecate FROM products LEFT JOIN category ON category.id = products.category_id WHERE category.id = '$reques_cate'";
+             $product = $db->fetchsql($sql);
+       
+        }
+
+        //tim san pham theo ten va category  bat buoc phai kiem tra cac gia tri input co null hay khong
+         if(isset($reques_name) && isset($reques_cate) && $reques_cate != NULL && $reques_name != NULL)
+        {
+            $sql = "SELECT products.*,category.name as namecate FROM products LEFT JOIN category ON category.id = products.category_id WHERE category.id = '$reques_cate' AND products.name LIKE '%$reques_name%'";
+             $product = $db->fetchsql($sql);
+        }    
+
+        if(isset($reques_name) && isset($reques_cate) && $reques_cate == '' && $reques_name == '')
+        {
+
+            $sql = "SELECT products.*,category.name as namecate FROM products LEFT JOIN category ON category.id = products.category_id";
+             $product = $db->fetchJone('products',$sql,$p,2,true);
+             if (isset($product['page'])) {
             $sotrang = $product['page'];
             unset($product['page']);
         }
+        }    
+
+        
  ?>
 
 <?php require_once __DIR__."/../../layouts/header.php"; //__DIR__Đường dẫn thư mục hiện tại.?>
@@ -42,7 +72,24 @@
         </div>
     </div>
     <!-- /.row -->
+    
    <div class="row">
+    <div class="col-sm-12">
+            <form class="form-inline" action="" style="margin-bottom: 20px">
+                <div class="form-group">
+                    <input type="text" class="form-control"  placeholder="Tên sản phẩm..." name="name" value="<?php echo getInput('name') ?>">
+                </div>
+                <div class="form-group">
+                    <select name="cate" id="" class="form-control">
+                        <option value="">Danh mục</option>
+                         <?php foreach ($category as  $value): ?>
+                            <option value="<?php echo $value['id'] ?>" <?php echo getInput('cate') == $value['id'] ? "selected = 'selected'" : '' ?>><?php echo $value['name'] ?></option> 
+                         <?php endforeach ?> 
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
        <div class="col-md-12">
            <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -83,7 +130,8 @@
             </div>
        </div>
    </div>
-   <div class="pull-right">
+  <?php if (isset($sotrang)): ?>
+       <div class="pull-right">
        <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
@@ -113,6 +161,7 @@
             </ul>
         </nav>
    </div>
+  <?php endif ?>
 <?php require_once __DIR__."/../../layouts/footer.php"?>
 
              

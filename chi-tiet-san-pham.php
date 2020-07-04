@@ -46,7 +46,7 @@
                             	<?php endif ?>
                             </li>
                             <li><p><strike class="sale"><?php echo formatNumber($detailProduct['price']) ?> đ</strike> <b class="price"><?php echo salePrice($detailProduct['price'],$detailProduct['sale'])?> đ</b</li>
-                            <li><a href="addcart.php" class="btn btn-default"> <i class="fa fa-shopping-basket"></i>Add TO Cart</a></li>
+                            <li><a href="addcart.php?id=<?php echo $detailProduct['id']?>" class="btn btn-default"> <i class="fa fa-shopping-basket"></i>Add TO Cart</a></li>
                        </ul>
                     </div>
 

@@ -3,7 +3,9 @@
    if (!isset($_SESSION['name'])) {
         echo "<script> alert('Bạn phải đăng nhập mới thức hiện được chức năng này'); location.href='index.php' </script>";
     }
+    //lấy id sản phẩm trên url
     $id = intval(getInput('id'));
+    //lấy toàn bộ thông tin sản phẩm theo id
     $product = $db->fetchID("products",$id);
     //neu chua co gio hang thi tao moi
     if (!isset($_SESSION['cart'][$id])) {

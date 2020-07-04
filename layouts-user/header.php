@@ -95,6 +95,9 @@
                          <li class="<?php echo isset($open) && $open == 'sp-ban-chay' ? 'active' : ''?>">
                             <a href="/tuanphuongphp/user/san-pham-ban-chay.php"><i class="fa fa-list"></i> Sản phẩm bán chạy</a>
                         </li>
+                         <li class="<?php echo isset($open) && $open == 'sp-da-mua' ? 'active' : ''?>">
+                            <a href="/tuanphuongphp/user/san-pham-da-mua.php"><i class="fa fa-list"></i> Sản phẩm đã mua</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->

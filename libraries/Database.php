@@ -12,10 +12,12 @@
          * @var [type]
          */
         public $link;
-
+        //contructor luôn gọi đến khi khởi tạo đối tượng
         public function __construct()
         {
+            //create connection
             $this->link = mysqli_connect("localhost","root","","tuanphuongphp") or die ();
+            //set tiếng việt
             mysqli_set_charset($this->link,"utf8");
         }
 
@@ -27,6 +29,7 @@
          * @param  array  $data  
          * @return integer
          */
+        // INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);
         public function insert($table, array $data)
         {
             //code
@@ -40,14 +43,18 @@
             //$sql = (id,name)
             foreach($data as $field => $value) {
                 if(is_string($value)) {
+                    //nếu dử liệu đầu vào là kiểu string
                     $values .= "'". mysqli_real_escape_string($this->link,$value) ."',";
                     //mysqli_real_escape_string(connection, escapestring)
+                    //mysqli_real_escape_string loại bỏ các ký tự đặc biệt
                     //in ra '1','quyet',
                 } else {
+                    //nếu dữ liệu đầu vào không phải là kiểu string ( kiểu int chẳng hạn)
                     $values .= mysqli_real_escape_string($this->link,$value) . ',';
                 }
             }
             $values = substr($values, 0, -1);//substr($str,$star,$lent);
+            //substr("abcdef", 0, -1); // trả về "abcde"
             //loại bỏ dấu , sau cũng của $value = '1','quyet',
             //Nếu tham số $length được sử dụng và là một số dương, chuỗi trả về sẽ bao gồm $length ký tự, tính từ vị trí thứ $start (tùy thuộc vào độ dài của chuỗi).
 
@@ -60,7 +67,7 @@
             //Hàm mysqli_error() sẽ trả về nội dung của lỗi gần nhất xảy ra khi gọi hàm nào đó từ kết nối MySQL.
             return mysqli_insert_id($this->link);//lấy id vừa insert
         }
-
+        //UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;
         public function update($table, array $data, array $conditions)
         {
             $sql = "UPDATE {$table}";
@@ -96,7 +103,8 @@
             $sql .= $set . $where;
             // _debug($sql);die;
 
-            mysqli_query($this->link, $sql) or die( "Lỗi truy vấn Update -- " .mysqli_error());
+            mysqli_query($this->link, $sql) or die( "Lỗi truy vấn Update -- " .mysqli_error($this->link));
+            
             //mysqli_error() Returns a string description of the last error
 
             return mysqli_affected_rows($this->link);
@@ -124,6 +132,7 @@
          * @param  array  $conditions [description]
          * @return integer             [description]
          */
+        //DELETE FROM table_name WHERE condition;
         public function delete ($table ,  $id )
         {
             $sql = "DELETE FROM {$table} WHERE id = $id ";
@@ -140,14 +149,14 @@
         {
             foreach ($data as $id)
             {
-                $id = intval($id);
+                $id = intval($id);//ép sang kiểu nguyên
                 //intval Returns the integer value of var, using the specified base for the conversion (the default is base 10)
                 $sql = "DELETE FROM {$table} WHERE id = $id ";
                 mysqli_query($this->link,$sql) or die (" Lỗi Truy Vấn delete   --- " .mysqli_error($this->link));
             }
             return true;
         }
-
+        //lấy dử liệu theo chuổi sql truyền vào hàm
         public function fetchsql( $sql )
         {
             $result = mysqli_query($this->link,$sql) or die("Lỗi  truy vấn sql " .mysqli_error($this->link));
@@ -162,14 +171,14 @@
             }
             return $data;
         } 
-
+        //lấy dữ liệu theo id
         public function fetchID($table , $id )
         {
             $sql = "SELECT * FROM {$table} WHERE id = $id ";
             $result = mysqli_query($this->link,$sql) or die("Lỗi  truy vấn fetchID " .mysqli_error($this->link));
             return mysqli_fetch_assoc($result);
         }
-
+        //lấy 1 hàng dữ liệu 
         public function fetchOne($table , $query)
         {
             $sql  = "SELECT * FROM {$table} WHERE ";
@@ -178,7 +187,7 @@
             $result = mysqli_query($this->link,$sql) or die("Lỗi  truy vấn fetchOne " .mysqli_error($this->link));
             return mysqli_fetch_assoc($result);
         }
-
+        //xóa dữ liệu theo điều kiện cung cấp cho hàm
         public function deletesql ($table ,  $sql )
         {
             $sql = "DELETE FROM {$table} WHERE " .$sql;
@@ -188,7 +197,7 @@
         }
 
         
-
+        //lấy tất các dữ liệu của bảng được truyền vào
          public function fetchAll($table)
         {
             $sql = "SELECT * FROM {$table} WHERE 1" ;
@@ -235,6 +244,7 @@
             
             return $data;
         }
+        //phân trang
          public  function fetchJone($table,$sql ,$page = 0,$row ,$pagi = false )
         {
             
@@ -245,6 +255,7 @@
                 $total = $this->countTable($table);//tổng số records , tong tat ca records cua bang
                 $sotrang = ceil($total / $row);
                 $start = ($page - 1 ) * $row ;
+                //$page = 1 => $start = 1 - 1 * $row = 3 = 0 có nghĩa là lấy record 1 ,2, 3 lấy 3 record bắt đầu từ 0
                 // current_page: trang hiện tại
                 // limit: số records hiển thị trên mỗi trang
                 // start: record bắt đầu trong câu lệnh SQL
@@ -259,7 +270,7 @@
                 $result = mysqli_query($this->link,$sql) or die("Lỗi truy vấn fetchJone ---- " .mysqli_error($this->link));
             }
             
-            if( $result)
+            if($result)
             {
                 while ($num = mysqli_fetch_assoc($result))
                 {

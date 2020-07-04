@@ -12,7 +12,7 @@
         // lay tat ca cac san pham co category_id bang id cua category
         $product = $db->fetchsql($sqlProduct);
         $data[$value['name']] = $product;
-        //tra ve mot mang 2 chieu
+        //tạo mảng liên kết
     }
 ?>
 <?php require_once __DIR__."/layouts/header.php";?>
@@ -25,7 +25,7 @@
             <h3 class="title-main" style="text-align: center;"><a href="javascript:void(0)"><?php echo $key; ?></a> </h3>
             <div class="showitem">
                 <?php foreach ($value as $item): ?>
-                    <div class="col-md-3 item-product bor">
+                    <div class="col-md-3 item-product bor clearfix">
                     <a href="chi-tiet-san-pham.php?id=<?php echo $item['id']?>">
                         <img src="<?php echo uploads() ?>product/<?php echo $item['image'] ?>" class="" width="100%" height="180">
                     </a>
@@ -39,7 +39,9 @@
                         <p><a href="addcart.php?id=<?php echo $item['id']?>"><i class="fa fa-shopping-basket"></i></a></p>
                     </div>
                 </div>
+                
                 <?php endforeach ?>
+                <div class="clearfix"></div>
             </div>
         <?php endforeach ?>
     </section>
